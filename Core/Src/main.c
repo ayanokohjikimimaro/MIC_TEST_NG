@@ -36,6 +36,7 @@
 #define AUDIO_BUFFER_SIZE (AUDIO_SAMPLING_FREQUENCY * 1) // 1秒分のバッファサイズ
 #define SOUND_AVOID_DELAY_MS 150
 #define PRINT_DATA_COUNT 8000 // 表示する先頭データの数
+#define PRINT_DATA_OFFSET 0 // 表示する先頭データ
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -197,7 +198,7 @@ int main(void)
       }
 
       printf("Audio data acquisition complete. First %d samples:\r\n", PRINT_DATA_COUNT);
-      for (int i = 4000; i < 4000+PRINT_DATA_COUNT && i < AUDIO_BUFFER_SIZE; i++) {
+      for (int i = PRINT_DATA_OFFSET; i < PRINT_DATA_OFFSET+PRINT_DATA_COUNT && i < AUDIO_BUFFER_SIZE; i++) {
         printf("Sample %2d: %ld\r\n", i, audio_buffer[i]);
       }
       printf("\nData printing complete. Waiting for next button press...\r\n");

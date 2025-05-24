@@ -35,7 +35,7 @@
 #define AUDIO_SAMPLING_FREQUENCY 16000
 #define AUDIO_BUFFER_SIZE (AUDIO_SAMPLING_FREQUENCY * 1) // 1秒分のバッファサイズ
 #define SOUND_AVOID_DELAY_MS 150
-#define PRINT_DATA_COUNT 8000 // 表示する先頭データの数
+#define PRINT_DATA_COUNT 8//000 // 表示する先頭データの数
 #define PRINT_DATA_OFFSET 0 // 表示する先頭データ
 /* USER CODE END PD */
 
@@ -495,6 +495,16 @@ void HAL_DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filt
   }
   /* USER CODE END FilterRegConvCpltCallback */
 }
+
+
+void HAL_DFSDM_FilterErrorCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
+    if (hdfsdm_filter == &hdfsdm1_filter0) {
+        printf("!!! DFSDM Filter Error Callback! ErrorCode: 0x%lX !!!\r\n", (unsigned long)hdfsdm_filter->ErrorCode);
+        HAL_GPIO_WritePin(GPIOB, LD3_Pin, GPIO_PIN_SET);
+        HAL_DFSDM_FilterRegularStop_DMA(&hdfsdm1_filter0);
+    }
+}
+
 
 /**
   * @brief  Retargets the C library printf function to the ITM.

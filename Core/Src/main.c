@@ -35,7 +35,7 @@
 #define AUDIO_SAMPLING_FREQUENCY 16000
 #define AUDIO_BUFFER_SIZE (AUDIO_SAMPLING_FREQUENCY * 1) // 1秒分のバッファサイズ
 #define SOUND_AVOID_DELAY_MS 150
-#define PRINT_DATA_COUNT 30 // 表示する先頭データの数
+#define PRINT_DATA_COUNT 8000 // 表示する先頭データの数
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/

@@ -35,7 +35,7 @@
 #define AUDIO_SAMPLING_FREQUENCY 16000
 #define AUDIO_BUFFER_SIZE (AUDIO_SAMPLING_FREQUENCY * 1) // 1秒分のバッファサイズ
 #define SOUND_AVOID_DELAY_MS 150
-#define PRINT_DATA_COUNT 8//000 // 表示する先頭データの数
+#define PRINT_DATA_COUNT 8000 // 表示する先頭データの数
 #define PRINT_DATA_OFFSET 0 // 表示する先頭データ
 /* USER CODE END PD */
 
@@ -191,6 +191,7 @@ int main(void)
     // DMA完了によるデータ表示要求をチェック
     if (data_ready_to_print) {
       data_ready_to_print = 0; // フラグをクリア
+      dfsm_stop_dma_status = HAL_DFSDM_FilterRegularStop_DMA(&hdfsdm1_filter0);
 
       printf("DFSDM DMA Stop status from callback: %d (0=OK, 1=ERROR, 2=BUSY, 3=TIMEOUT)\r\n", dfsm_stop_dma_status);
       if (dfsm_stop_dma_status != HAL_OK && dfsm_stop_dma_status != HAL_BUSY) { // BUSYはDMAが既に止まっている場合など
@@ -485,7 +486,7 @@ void HAL_DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filt
     // DMA転送が完了したので、DFSDMのDMAを停止する
     // HAL_DFSDM_FilterRegularStop_DMA() はブロッキング関数であることに注意。
     // ノーマルモードなのでDMAは既に停止しているはずだが、状態をクリーンにするために呼び出す。
-    dfsm_stop_dma_status = HAL_DFSDM_FilterRegularStop_DMA(hdfsdm_filter);
+//    dfsm_stop_dma_status = HAL_DFSDM_FilterRegularStop_DMA(hdfsdm_filter);
     // dfsm_stop_dma_status はグローバル変数に保存し、メインループでその値を表示。
 
     data_ready_to_print = 1; // メインループでデータを表示するためのフラグをセット
